@@ -68,10 +68,40 @@ const buildDomString = (studentArray) => {
         domString += `<h1>${student.firstName} ${student.lastName}</h1>`;
         domString += `<h3>${student.catchPhrase}</h3>`;
         domString += `<img src="${student.avatar}" alt="">`;
-        domString += `<button class="button">Brought Pie</button>`;
+        domString += `<button class="card-button">Brought Pie</button>`;
         domString += `</div>`;
     });
     printToDom(domString, 'card-holder');
 }
-
 buildDomString(students);
+
+const addAllEventListeners = () => {
+// get all the buttons on the page
+const allTheButtons = document.getElementsByClassName('card-button');
+// iterating through is a blind-copy way of getting the items
+// let's not have this in the middle of nowhere
+for (let i = 0; i < allTheButtons.length; i++) {
+    allTheButtons[i].addEventListener('click', changeNameToGreen);
+    }
+};
+
+// function to make name green. do it separately from above function. it's always going to get the event (e) passed to it. this needs to be above the eventListener for now because it is separate from it, but it should be within that function.
+
+// this is the way to zone in 
+// target parent node of the button itself to know what you are active with (above) and iterate over the buttons
+const changeNameToGreen = (e) => {
+    // let's save a variable. make it equal to the button we clicked on (e.target) and then the path of parent...
+    const nameOfStudent = e.target.parentNode.children[0];
+    // the .classList method looks at the classes that are on the html element and then .add adds the green
+    nameOfStudent.classList.add('green');
+};
+
+// be nice and tell another dev looking @ code...
+const startApplication = () => {
+    buildDomString(students);
+    // make DOM interactive now
+    addAllEventListeners();
+};
+// call the function
+startApplication();
+
